@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Retro Focus Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Press Start 2P', monospace;
+    background: #111; /* retro dark console */
+    color: #0f0; /* classic green text */
+    text-align: center;
+    padding: 30px;
+  }
+  h1 {
+    color: #0ff;
+    margin-bottom: 20px;
+  }
+  #timer {
+    font-size: 36px;
+    margin: 20px 0;
+    color: #0f0;
+    text-shadow: 1px 1px #000;
+  }
+  #startBtn, #resetBtn {
+    padding: 10px 20px;
+    font-size: 12px;
+    margin: 5px;
+    cursor: pointer;
+    border: 2px solid #0f0;
+    background: #000;
+    color: #0f0;
+    border-radius: 4px;
+    box-shadow: 2px 2px #0ff;
+  }
+  #startBtn:hover, #resetBtn:hover {
+    background: #0f0;
+    color: #000;
+  }
+  #reward {
+    font-size: 14px;
+    margin-top: 20px;
+    color: #ff0;
+  }
+  #scoreboard {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #0ff;
+  }
+  #meme {
+    margin-top: 20px;
+    max-width: 200px;
+    display: none;
+    image-rendering: pixelated; /* retro pixel effect */
+    border: 2px solid #0f0;
+  }
+  #monster {
+    width: 80px;
+    display: none;
+    margin: 20px auto;
+    image-rendering: pixelated;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎮 Retro Focus Buddy 🎮</h1>
+<p>Focus timer! Every 1 minute = 1 retro session + reward!</p>
+
+<div id="timer">00:00</div>
+<button id="startBtn">START</button>
+<button id="resetBtn">RESET</button>
+
+<img id="monster" src="https://i.imgur.com/KT1cP0Z.gif" alt="pixel monster">
+
+<div id="reward"></div>
+<div id="scoreboard">Focused Sessions: 0</div>
+<img id="meme" src="" alt="pixel meme">
+
+<script>
+let seconds = 0;
+let interval;
+let sessions = 0;
+
+const timerEl = document.getElementById('timer');
+const rewardEl = document.getElementById('reward');
+const scoreboardEl = document.getElementById('scoreboard');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const memeEl = document.getElementById('meme');
+const monsterEl = document.getElementById('monster');
+
+function formatTime(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2,'0');
+    const s = String(sec % 60).padStart(2,'0');
+    return `${m}:${s}`;
+}
+
+// pixel / retro memes
+const memes = [
+    "img1.webp",
+    "img2.webp",
+    "img3.webp"
+];
+
+startBtn.addEventListener('click', () => {
+    if(interval) return;
+    interval = setInterval(() => {
+        seconds++;
+        timerEl.textContent = formatTime(seconds);
+
+        // Every 1 minute (60 seconds)
+        if(seconds % 60 === 0) {
+            sessions++;
+            scoreboardEl.textContent = `Focused Sessions: ${sessions}`;
+
+            // Show pixel meme
+            const meme = memes[Math.floor(Math.random() * memes.length)];
+            memeEl.src = meme;
+            memeEl.style.display = 'block';
+
+            // Retro reward message
+            const messages = [
+                "LEVEL UP! 1 min focus!",
+                "💾 POWER UP!",
+                "🎯 Precision focus achieved!",
+                "👾 Good job, player!",
+                "✨ Retro streak!"
+            ];
+            rewardEl.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+            // Show monster sprite briefly
+            monsterEl.style.display = 'block';
+            setTimeout(()=>{monsterEl.style.display='none';}, 5000);
+        }
+
+    }, 1000);
+});
+
+resetBtn.addEventListener('click', () => {
+    clearInterval(interval);
+    interval = null;
+    seconds = 0;
+    timerEl.textContent = "00:00";
+    rewardEl.textContent = "";
+    memeEl.style.display = 'none';
+    monsterEl.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
