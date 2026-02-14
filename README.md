@@ -75,7 +75,7 @@ Open index.html in any modern browser (Chrome, Firefox, Edge) to start the timer
 
 <img width="1745" height="982" alt="Screenshot_2026-02-14_08-10-42" src="https://github.com/user-attachments/assets/d5dd97e4-e1b0-4aa0-a319-a77aa79a0cf3" />
 
-*When user completed 1 minute and unlocked a session and completed a focus session*
+*When user completed 1 minute and unlocked a meme and completed a focus session*
 
 <img width="1729" height="966" alt="Screenshot_2026-02-14_08-08-43" src="https://github.com/user-attachments/assets/f6cba511-0a6a-4810-9289-6ed56293554a" />
 
