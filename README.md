@@ -110,30 +110,23 @@ HTML handles layout, CSS handles styling and retro/fun visuals, JS handles timer
 Index.html is opened by user, then when user initiates tracking, the timer starts tracking focus time. At predefined intervals (here, it is 60 seconds) a meme is unlocked and displayed, while the user is said to be completed a single session. Stats panel updates the number of session, focus time and memes unlocked. The user continues session and this process continues until entire session ends. User can reset timer or reload to reset stats and timer.
 
 ## Project Demo
-
+### Video
 
 
 https://github.com/user-attachments/assets/ccfc0574-03d7-4107-b008-a0fa0fc72b80
 
+The video displays the working of the created mvp. Index.html is opened by user, then when user initiates tracking, the timer starts tracking focus time. At predefined intervals (here, it is 60 seconds) a meme is unlocked and displayed, while the user is said to be completed a single session. Stats panel updates the number of session, focus time and memes unlocked. The user continues session and this process continues until entire session ends. User can reset timer or reload to reset stats and timer.
 
-
-### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
-
-*Explain what the video demonstrates - key features, user flow, technical highlights*
-
-### Additional Demos
-[Add any extra demo materials/links - Live site, APK download, online demo, etc.]
 
 ---
 
-## AI Tools Used (Optional - For Transparency Bonus)
+## AI Tools Used
 
 If you used AI tools during development, document them here for transparency:
 
 **Tool Used:** ChatGPT
 
-**Purpose:** [What you used it for]
+**Purpose:**
 - Assisted in brainstorming ideas, feature planning, and structuring the project.
 
 - Provided guidance on coding logic, event handling, and timer/meme interactions.
