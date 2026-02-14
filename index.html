@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Retro Focus Buddy</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Press Start 2P', monospace;
+    background: #111;
+    color: #0f0;
+    text-align: center;
+    padding: 30px;
+  }
+  h1 {
+    color: #0ff;
+    margin-bottom: 20px;
+  }
+  #timer {
+    font-size: 36px;
+    margin: 20px 0;
+    text-shadow: 1px 1px #000;
+  }
+  #startBtn, #resetBtn {
+    padding: 10px 20px;
+    font-size: 12px;
+    margin: 5px;
+    cursor: pointer;
+    border: 2px solid #0f0;
+    background: #000;
+    color: #0f0;
+    border-radius: 4px;
+    box-shadow: 2px 2px #0ff;
+  }
+  #startBtn:hover, #resetBtn:hover {
+    background: #0f0;
+    color: #000;
+  }
+  #reward {
+    font-size: 14px;
+    margin-top: 20px;
+    color: #ff0;
+    min-height: 20px;
+  }
+  #scoreboard, #streak {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #0ff;
+  }
+  #meme {
+    margin-top: 20px;
+    max-width: 200px;
+    display: none;
+    image-rendering: pixelated;
+    border: 2px solid #0f0;
+  }
+  /* Visual Stats Panel */
+  #stats { margin-top: 20px; }
+  #minutesBar {
+    height: 12px; width: 200px; background:#222; border:1px solid #0f0; margin:5px auto;
+  }
+  #minutesProgress { height:100%; width:0%; background:#0f0; transition: width 0.3s;}
+  #sessionsRow, #memesRow {
+    margin:5px auto; display:flex; justify-content:center; flex-wrap: wrap;
+  }
+  #sessionsRow div, #memesRow img { margin:2px; }
+</style>
+</head>
+<body>
+
+<h1>🎮 Retro Focus Buddy 🎮</h1>
+<p>Focus timer! Every 1 min = 1 retro session + reward!</p>
+
+<div id="timer">00:00</div>
+<button id="startBtn">START</button>
+<button id="resetBtn">RESET</button>
+
+<div id="reward"></div>
+<div id="scoreboard">Focused Sessions: 0</div>
+<div id="streak">Memes unlocked: 0</div>
+<img id="meme" src="" alt="pixel meme">
+
+<!-- Visual Stats Panel -->
+<div id="stats">
+  <div>Minutes Focused:</div>
+  <div id="minutesBar">
+    <div id="minutesProgress"></div>
+  </div>
+  <div>Sessions Completed:</div>
+  <div id="sessionsRow"></div>
+  <div>Memes Unlocked:</div>
+  <div id="memesRow"></div>
+</div>
+
+<script>
+let seconds = 0;
+let interval;
+let sessions = 0;
+let memesUnlocked = 0;
+
+const timerEl = document.getElementById('timer');
+const rewardEl = document.getElementById('reward');
+const scoreboardEl = document.getElementById('scoreboard');
+const streakEl = document.getElementById('streak');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const memeEl = document.getElementById('meme');
+
+const minutesProgress = document.getElementById('minutesProgress');
+const sessionsRow = document.getElementById('sessionsRow');
+const memesRow = document.getElementById('memesRow');
+
+// pixel / retro memes
+const memes = [
+    "img1.webp",
+    "img2.webp",
+    "img3.webp"
+];
+
+function formatTime(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2,'0');
+    const s = String(sec % 60).padStart(2,'0');
+    return `${m}:${s}`;
+}
+
+// Update visual stats
+function updateVisuals() {
+    // Minutes progress (cap at 60 min)
+    let percent = Math.min((seconds / 60) * 100, 100);
+    minutesProgress.style.width = percent + "%";
+
+    // Sessions tokens
+    sessionsRow.innerHTML = '';
+    for(let i=0;i<sessions;i++){
+        const token = document.createElement('div');
+        token.style.width = '10px';
+        token.style.height = '10px';
+        token.style.background = '#0ff';
+        token.style.imageRendering = 'pixelated';
+        sessionsRow.appendChild(token);
+    }
+
+    // Memes thumbnails
+    memesRow.innerHTML = '';
+    for(let i=0;i<memesUnlocked;i++){
+        const thumb = document.createElement('img');
+        thumb.src = memes[i % memes.length];
+        thumb.style.width = '50px';
+        thumb.style.height = '50px';
+        thumb.style.imageRendering = 'pixelated';
+        memesRow.appendChild(thumb);
+    }
+}
+
+startBtn.addEventListener('click', () => {
+    if(interval) return;
+    interval = setInterval(() => {
+        seconds++;
+        timerEl.textContent = formatTime(seconds);
+
+        // Every 1 minute (60 seconds)
+        if(seconds % 60 === 0){
+            sessions++;
+            memesUnlocked++;
+            scoreboardEl.textContent = `Focused Sessions: ${sessions}`;
+            streakEl.textContent = `Memes unlocked: ${memesUnlocked}`;
+
+            // Show pixel meme
+            const meme = memes[Math.floor(Math.random() * memes.length)];
+            memeEl.src = meme;
+            memeEl.style.display = 'block';
+
+            // Retro reward message
+            const messages = [
+                "LEVEL UP! 1 min focus!",
+                "💾 POWER UP!",
+                "🎯 Precision focus achieved!",
+                "👾 Good job, player!",
+                "✨ Retro streak!"
+            ];
+            rewardEl.textContent = messages[Math.floor(Math.random() * messages.length)];
+
+            // Update visual stats panel
+            updateVisuals();
+        }
+
+    }, 1000);
+});
+
+resetBtn.addEventListener('click', () => {
+    clearInterval(interval);
+    interval = null;
+    seconds = 0;
+    sessions = 0;
+    memesUnlocked = 0;
+    timerEl.textContent = "00:00";
+    rewardEl.textContent = "";
+    scoreboardEl.textContent = "Focused Sessions: 0";
+    streakEl.textContent = "Memes unlocked: 0";
+    memeEl.style.display = 'none';
+    updateVisuals();
+});
+</script>
+
+</body>
+</html>
