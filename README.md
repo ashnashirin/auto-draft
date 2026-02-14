@@ -1,4 +1,3 @@
-<img width="1745" height="982" alt="Screenshot_2026-02-14_08-10-42" src="https://github.com/user-attachments/assets/67a26cb0-4393-4177-a302-f737bfc2fb59" /><p align="center">
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
